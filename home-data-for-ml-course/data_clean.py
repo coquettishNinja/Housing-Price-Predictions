@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from pandas import Series
 
-df = pd.read_csv('train.csv')
+df = pd.read_csv('../home-data-for-ml-course/train.csv')
 
 print(df.columns)
 
@@ -32,4 +32,5 @@ print("Complete rows with non-NaN PoolQC:")
 rows_with_pool = df[df['PoolQC'].notna()]
 print(rows_with_pool[['Id', 'PoolArea', 'PoolQC', 'SalePrice']])
 
-df
+
+

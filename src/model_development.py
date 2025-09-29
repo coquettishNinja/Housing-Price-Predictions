@@ -10,8 +10,22 @@ from sklearn.model_selection import train_test_split, cross_val_score, GridSearc
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-import xgboost as xgb
-import lightgbm as lgb
+
+# Handle optional dependencies
+try:
+    import xgboost as xgb
+    XGBOOST_AVAILABLE = True
+except ImportError:
+    print("⚠️ XGBoost not available. Install with: pip install xgboost>=1.6.0")
+    XGBOOST_AVAILABLE = False
+
+try:
+    import lightgbm as lgb
+    LIGHTGBM_AVAILABLE = True
+except ImportError:
+    print("⚠️ LightGBM not available. Install with: pip install lightgbm>=3.3.0")
+    LIGHTGBM_AVAILABLE = False
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -67,9 +81,15 @@ class HousingModelDevelopment:
             # Tree-based Models
             'RandomForest': RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1),
             'GradientBoosting': GradientBoostingRegressor(random_state=42),
-            'XGBoost': xgb.XGBRegressor(random_state=42, n_jobs=-1),
-            'LightGBM': lgb.LGBMRegressor(random_state=42, n_jobs=-1, verbose=-1)
         }
+        
+        # Add XGBoost if available
+        if XGBOOST_AVAILABLE:
+            models['XGBoost'] = xgb.XGBRegressor(random_state=42, n_jobs=-1)
+        
+        # Add LightGBM if available
+        if LIGHTGBM_AVAILABLE:
+            models['LightGBM'] = lgb.LGBMRegressor(random_state=42, n_jobs=-1, verbose=-1)
         
         print(f"  Setup {len(models)} model candidates")
         return models

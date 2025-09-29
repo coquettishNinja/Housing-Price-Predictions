@@ -218,6 +218,36 @@ class HousingEDA:
         }
 
 if __name__ == "__main__":
-    # Run EDA
-    eda = HousingEDA('../home-data-for-ml-course/train.csv', '../home-data-for-ml-course/test.csv')
-    results = eda.run_complete_eda()
+    # Try different possible paths
+    import os
+    
+    print(f"🔍 Current working directory: {os.getcwd()}")
+    
+    possible_paths = [
+        ('home-data-for-ml-course/train.csv', 'home-data-for-ml-course/test.csv'),
+        ('../home-data-for-ml-course/train.csv', '../home-data-for-ml-course/test.csv'),
+        ('./home-data-for-ml-course/train.csv', './home-data-for-ml-course/test.csv')
+    ]
+    
+    train_path = None
+    test_path = None
+    
+    for train_p, test_p in possible_paths:
+        if os.path.exists(train_p):
+            train_path = train_p
+            test_path = test_p if os.path.exists(test_p) else None
+            break
+    
+    if train_path is None:
+        print("❌ Could not find train.csv file")
+        print("💡 Available files in current directory:")
+        for item in os.listdir('.'):
+            print(f"   - {item}")
+        if os.path.exists('home-data-for-ml-course'):
+            print("💡 Files in home-data-for-ml-course/:")
+            for item in os.listdir('home-data-for-ml-course'):
+                print(f"   - {item}")
+    else:
+        # Run EDA
+        eda = HousingEDA(train_path, test_path)
+        results = eda.run_complete_eda()

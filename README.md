@@ -1,5 +1,8 @@
 # Housing-Price-Predictions
 With 79 explanatory variables describing (almost) every aspect of residential homes in Ames, Iowa.
+🏠 Intelligent ML system for housing price prediction with 87% accuracy. Features advanced analytics, SHAP interpretability, 
+and business insights for real estate professionals.
+# Machine-learning, housing-prices, real-estate, python, scikit-learn, xgboost, shap, data-science, predictive-modeling, business-analytics 
 
 # Dataset Description
 File descriptions

@@ -238,9 +238,38 @@ class HousingModelDevelopment:
 if __name__ == "__main__":
     # Example usage with preprocessed data
     from data_preprocessing import HousingPreprocessor
+    import os
+    
+    # Try different possible paths for the data file
+    possible_paths = [
+        'home-data-for-ml-course/train.csv',
+        '../home-data-for-ml-course/train.csv',
+        './home-data-for-ml-course/train.csv'
+    ]
+    
+    train_path = None
+    for path in possible_paths:
+        if os.path.exists(path):
+            train_path = path
+            break
+    
+    if train_path is None:
+        print("❌ Could not find train.csv file")
+        print(f"🔍 Current working directory: {os.getcwd()}")
+        print("💡 Available files and directories:")
+        for item in os.listdir('.'):
+            print(f"   - {item}")
+        if os.path.exists('home-data-for-ml-course'):
+            print("💡 Files in home-data-for-ml-course/:")
+            for item in os.listdir('home-data-for-ml-course'):
+                print(f"   - {item}")
+        print("\n🔧 Please ensure train.csv is in the home-data-for-ml-course/ directory")
+        exit(1)
+    
+    print(f"✅ Found data file at: {train_path}")
     
     # Load and preprocess data
-    train_df = pd.read_csv('../home-data-for-ml-course/train.csv')
+    train_df = pd.read_csv(train_path)
     preprocessor = HousingPreprocessor()
     X_train, y_train = preprocessor.preprocess_pipeline(train_df)
     
